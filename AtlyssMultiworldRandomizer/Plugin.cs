@@ -26,6 +26,39 @@ public class Plugin : BaseUnityPlugin
         On.OptionsMenuCell.SaveQuit_Game += _disconnectionMultiworld;
     }
 
+    public void Connect()
+    {
+        Session = ArchipelagoSessionFactory.CreateSession(
+            $"{Configuration.connectionIP.Value}:{Configuration.connectionPort.Value}");
+        
+        try
+        {
+            LoginResult = Session.TryConnectAndLogin(
+                "Atlyss",
+                Configuration.connectionSlot.Value,
+                ItemsHandlingFlags.AllItems,
+                new Version(0, 6, 3),
+                password: Configuration.connectionPassword.Value);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError("There was an error while connecting to the multiworld!");
+            var result = new LoginFailure(ex.GetBaseException().Message);
+            foreach (var error in result.Errors)
+            {
+                Logger.LogError(error);
+            }
+        }
+
+        if (LoginResult.Successful)
+        {
+            LoginSuccessful = (LoginSuccessful)LoginResult;
+            Logger.LogInfo($"Successfully connected to multiworld! Slot: {LoginSuccessful.Slot}");
+            ClearItemQueue();
+            Hook();
+        }
+    }
+
     public void Hook()
     {
         On.Portal.Update += Hooks.CheckMultiworldPortalItem;
@@ -58,35 +91,8 @@ public class Plugin : BaseUnityPlugin
 
     private void _connectionMultiworld(On.CharacterSelectManager.orig_Select_CharacterFile orig, CharacterSelectManager self)
     {
-        Session = ArchipelagoSessionFactory.CreateSession(
-            $"{Configuration.connectionIP.Value}:{Configuration.connectionPort.Value}");
-        
-        try
-        {
-            LoginResult = Session.TryConnectAndLogin(
-                "Atlyss",
-                Configuration.connectionSlot.Value,
-                ItemsHandlingFlags.AllItems,
-                new Version(0, 6, 3),
-                password: Configuration.connectionPassword.Value);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError("There was an error while connecting to the multiworld!");
-            var result = new LoginFailure(ex.GetBaseException().Message);
-            foreach (var error in result.Errors)
-            {
-                Logger.LogError(error);
-            }
-        }
-
-        if (LoginResult.Successful)
-        {
-            LoginSuccessful = (LoginSuccessful)LoginResult;
-            Logger.LogInfo($"Successfully connected to multiworld! Slot: {LoginSuccessful.Slot}");
-            orig(self);
-            ClearItemQueue();
-            Hook();
-        }
+        if (!ProfileDataManager._current._characterFile._isEmptySlot)
+            Connect();
+        orig(self);
     }
 }
