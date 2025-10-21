@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Archipelago.MultiClient.Net.Enums;
 using Archipelago.MultiClient.Net.Helpers;
 using AtlyssMultiworldRandomizer.data;
 using UnityEngine;
@@ -112,21 +113,26 @@ public class Hooks
 
     public static void ReceiveFiller(ReceivedItemsHelper helper)
     {
-        ScriptableItem item = GameManager._current.Locate_Item(helper.PeekItem().ItemName);
-
-        if (!Player._mainPlayer._pInventory.Check_InventoryFull(item, 1))
+        string multiworldItemName = helper.PeekItem().ItemName;
+        Plugin.Logger.LogInfo($"Received Item {multiworldItemName}");
+        if (helper.PeekItem().Flags == ItemFlags.None)
         {
-            Plugin.Logger.LogInfo($"Adding {item._itemName} to inventory");
-            ItemData itemData = new ItemData()
+            ScriptableItem item = GameManager._current.Locate_Item(multiworldItemName);
+
+            if (!Player._mainPlayer._pInventory.Check_InventoryFull(item, 1))
             {
-                _itemName = item._itemName,
-                _quantity = 1,
-                _maxQuantity = item._maxStackAmount,
-                _isEquipped = false,
-                _isAltWeapon = false
-            };
+                Plugin.Logger.LogInfo($"Adding {item._itemName} to inventory");
+                ItemData itemData = new ItemData()
+                {
+                    _itemName = item._itemName,
+                    _quantity = 1,
+                    _maxQuantity = item._maxStackAmount,
+                    _isEquipped = false,
+                    _isAltWeapon = false
+                };
             
-            Player._mainPlayer._pInventory.Add_Item(itemData, true);
+                Player._mainPlayer._pInventory.Add_Item(itemData, true);
+            }
         }
 
         helper.DequeueItem();
