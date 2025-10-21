@@ -11,9 +11,9 @@ public class Configuration
 
     public static void CreateConfigEntries(ConfigFile config)
     {
-        connectionIP = config.Bind(MyPluginInfo.PLUGIN_GUID, "localhost", "IP used to connect to the multiworld");
-        connectionPort = config.Bind(MyPluginInfo.PLUGIN_GUID, "38281", "Port used to connect to the multiworld");
-        connectionSlot = config.Bind(MyPluginInfo.PLUGIN_GUID, "", "Slot name used to connect to the multiworld");
-        connectionPassword = config.Bind(MyPluginInfo.PLUGIN_GUID, "", "Password to connect to the multiworld");
+        connectionIP = config.Bind(MyPluginInfo.PLUGIN_GUID, "Multiworld Connection IP", "localhost");
+        connectionPort = config.Bind(MyPluginInfo.PLUGIN_GUID, "Multiworld Connection Port", "38281");
+        connectionSlot = config.Bind(MyPluginInfo.PLUGIN_GUID, "Multiworld Slot Name", "");
+        connectionPassword = config.Bind(MyPluginInfo.PLUGIN_GUID, "Multiworld Password", "");
     }
 }
