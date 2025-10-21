@@ -26,6 +26,17 @@ public class Plugin : BaseUnityPlugin
         On.OptionsMenuCell.SaveQuit_Game += _disconnectionMultiworld;
     }
 
+    public void Hook()
+    {
+        On.Portal.Update += Hooks.CheckMultiworldPortalItem;
+        On.DungeonPortalManager.Update += Hooks.CheckMultiworldDungeonItem;
+        On.SteamAchievementManager.Init_EarnAchievement += Hooks.SendAchievementLocations;
+        On.PlayerInteract.Queue_TriggerInteractionCommand_ItemDropEntity_Chest += Hooks.SendChestLocations;
+        On.PlayerQuesting.Client_CompleteQuest += Hooks.SendQuestLocations;
+        On.PlayerStats.GainExp += Hooks.ExpMultiplier;
+        Session.Items.ItemReceived += Hooks.ReceiveFiller;
+    }
+
     private void _disconnectionMultiworld(On.OptionsMenuCell.orig_SaveQuit_Game orig, OptionsMenuCell self)
     {
         Session.Socket.DisconnectAsync();
@@ -62,6 +73,7 @@ public class Plugin : BaseUnityPlugin
             LoginSuccessful = (LoginSuccessful)LoginResult;
             Logger.LogInfo($"Successfully connected to multiworld! Slot: {LoginSuccessful.Slot}");
             orig(self);
+            Hook();
         }
     }
 }

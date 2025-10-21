@@ -35,8 +35,20 @@
       <Reference Include="Assembly-CSharp">
         <HintPath>ref\Assembly-CSharp.dll</HintPath>
       </Reference>
+      <Reference Include="Mirror">
+        <HintPath>ref\Mirror.dll</HintPath>
+      </Reference>
       <Reference Include="MMHOOK_Assembly-CSharp">
         <HintPath>ref\MMHOOK_Assembly-CSharp.dll</HintPath>
+      </Reference>
+      <Reference Include="netstandard">
+        <HintPath>ref\netstandard.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.CoreModule">
+        <HintPath>ref\UnityEngine.CoreModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UI">
+        <HintPath>ref\UnityEngine.UI.dll</HintPath>
       </Reference>
     </ItemGroup>
     

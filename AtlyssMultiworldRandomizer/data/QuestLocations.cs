@@ -1,0 +1,55 @@
+﻿using System.Collections.Generic;
+
+namespace AtlyssMultiworldRandomizer.data;
+
+public class QuestLocations
+{
+    public static Dictionary<string, long> QuestNameToLocationId = new()
+    {
+        { "Communing Catacombs", 1 },
+        { "Diva Must Die", 2 },
+        { "The Keep Within", 3 },
+        { "Tethering Grove", 4 },
+        { "Spiraling In The Grove", 15 },
+        { "Hell In The Grove", 16 },
+        { "The Gylyphik Booklet", 5 },
+        { "Wicked Wizboars", 6 },
+        { "Nulversa Magica", 7 },
+        { "Cold Shoulder", 8 },
+        { "Mastery of Mind", 9 },
+        { "Blossom of Life", 10 },
+        { "Night Spirits", 11 },
+        { "Ridding Slimes", 12 },
+        { "Huntin' Hogs", 13 },
+        { "Finding Ammagon", 14 },
+        { "The Colossus", 17 },
+        { "Purging the Grove", 18 },
+        { "Cleansing the Grove", 19 },
+        { "Nulversa Viscera", 20 },
+        { "Call of Fury", 21 },
+        { "Mastery of Strength", 22 },
+        { "Beckoning Foes", 23 },
+        { "Ghostly Goods", 24 },
+        { "Makin' a Mekspear", 25 },
+        { "Makin' a Wizwand", 26 },
+        { "Makin' a Vile Blade", 27 },
+        { "Makin' a Golem Chestplate", 28 },
+        { "Makin' a Ragespear", 29 },
+        { "Makin' a Monolith Chestplate", 30 },
+        { "Makin' a Firebreath Blade", 31 },
+        { "Makin' a Follycannon", 32 },
+        { "Nulversa, Greenversa!", 33 },
+        { "Focusin' in", 34 },
+        { "Mastery of Dexterity", 35 },
+        { "Killing Tomb", 36 },
+        { "The Voice of Zuulneruda", 37 },
+        { "Purging the Undead", 38 },
+        { "Rattlecage Rage", 39 },
+        { "Consumed Madness", 40 },
+        { "Eradicating the Undead", 41 },
+        { "Reviling the Rageboars", 42 },
+        { "Gatling Galius", 43 },
+        { "Facing Foes", 44 },
+        { "Up and Over It", 45},
+    };
+}
