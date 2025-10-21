@@ -37,6 +37,18 @@ public class Plugin : BaseUnityPlugin
         Session.Items.ItemReceived += Hooks.ReceiveFiller;
     }
 
+    public void ClearItemQueue()
+    {
+        Logger.LogInfo("Clearing item queue...");
+        while (Session.Items.Any())
+        {
+            string itemName = Session.Items.PeekItem().ItemName;
+            Logger.LogInfo($"Removing {itemName} from queue...");
+            Session.Items.DequeueItem();
+        }
+        Logger.LogInfo("Done clearing item queue");
+    }
+
     private void _disconnectionMultiworld(On.OptionsMenuCell.orig_SaveQuit_Game orig, OptionsMenuCell self)
     {
         Session.Socket.DisconnectAsync();
@@ -73,6 +85,7 @@ public class Plugin : BaseUnityPlugin
             LoginSuccessful = (LoginSuccessful)LoginResult;
             Logger.LogInfo($"Successfully connected to multiworld! Slot: {LoginSuccessful.Slot}");
             orig(self);
+            ClearItemQueue();
             Hook();
         }
     }
